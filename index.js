@@ -10,7 +10,23 @@ app.get('/', function (req, res) {
     res.send('Loja-Informatica')
 })
 
-const lista_produtos = require('./dados.json')
+let mysql = require('mysql')
+let conexao = mysql.createConnection({
+    host: "108.179.193.209",
+    user: "gutoxa27_alunos",
+    password: "JD_eXLNHp1ZG",
+    database: "gutoxa27_bd_loja"
+})
+
+
+conexao.connect(function (erro) {
+    if (erro) {
+        console.log("Deu ruim na conexão \n");
+        throw erro;
+    } else {
+        console.log("Conexão deu BOM \n")
+    }
+})
 // [
 //     {
 //         "titulo": "Red Nike",
@@ -38,10 +54,24 @@ const lista_produtos = require('./dados.json')
 // Read All - [GET] /produtos
 app.get("/produtos", function (req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*')
+conexao.query("SELECT * FROM produtos where", function (erro, lista_produtos, campos){
+    console.log(lista_produtos);
     res.send(lista_produtos)
 })
-
+})
+ 
 
 
 
 app.listen(3000)
+
+// 1 - trazer apenas 12 primeiros produtos
+// 2 - trazer apenas produtos que comecem com a letra a
+// 3 - trazer apenas produtos que tenham o preço de 410
+// 4 - trazer apenas produtos com avaliação 4 e 5 
+// 5 - trazer apenas produtos com avaliação 1 e 5
+// 6 - trazer apenas produtos entre id 21 e 32
+// 7 - trazer apenas os 12 ultimos produtos
+// 8 - trazer apenas os 12 primeiros produtos com avaliação 5
+// 9 - trazer todo os produtos em ordem de preço do menor para o maior
+// 10 - trazer todo os produtos em ordem de avaliação do menor para o maior
