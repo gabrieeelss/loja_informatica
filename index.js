@@ -6,7 +6,7 @@ const app = express()
 app.use(express.json())
 
 app.get('/', function (req, res) {
-    res.setHeader('Acess-Control-Allow-Origin', '*')
+    res.setHeader('Access-Control-Allow-Origin', '*')
     res.send('Loja-Informatica')
 })
 
@@ -54,12 +54,12 @@ conexao.connect(function (erro) {
 // Read All - [GET] /produtos
 app.get("/produtos", function (req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*')
-conexao.query("SELECT * FROM produtos where", function (erro, lista_produtos, campos){
+conexao.query("SELECT * FROM produtos", function (erro, lista_produtos, campos){
     console.log(lista_produtos);
     res.send(lista_produtos)
 })
 })
- 
+
 
 
 
@@ -75,3 +75,13 @@ app.listen(3000)
 // 8 - trazer apenas os 12 primeiros produtos com avaliação 5
 // 9 - trazer todo os produtos em ordem de preço do menor para o maior
 // 10 - trazer todo os produtos em ordem de avaliação do menor para o maior
+
+
+app.get("/unidades", function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*')
+conexao.query("SELECT * FROM unidades", function (erro, lista_unidades){
+    console.log(lista_unidades);
+    res.send(lista_unidades)
+    
+})
+})
