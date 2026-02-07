@@ -2,3 +2,6 @@
     height: 300px;
     object-fit: cover;
 }
+.body {
+    background-color: rgb(202, 229, 253);
+}

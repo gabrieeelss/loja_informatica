@@ -4,18 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidades</title>
+    <title>Loja do Zé</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="body">
 
     <div class="container">
         <h1 class="text-center mb-5 mt-3">Lista de Produtos</h1>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -43,22 +43,18 @@
                         </li>
                     </ul>
                     <ul>
-                        <li>
-                    <a href="produtos.html?categoria=camisetas&ordem=preco">Ordenar pelo preço</a>
-                    <a href="produtos.html?categoria=camisetas&ordem=titulo">Ordenar pelo titulo</a>
-                    </li>
+
+                        <a href="produtos.html?categoria=camisetas&ordem=preco">Ordenar pelo preço</a>
+                        <a href="produtos.html?categoria=camisetas&ordem=titulo">Ordenar pelo titulo</a>
                     </ul>
                 </div>
             </div>
         </nav>
+        <div class="row lista-produtos">
 
-    <div class="container">
-        <h1 class="text-center mb-5 mt-3">Lista de Unidades</h1>
-        <div class="row lista-unidades">
-            
         </div>
     </div>
-    <script src="app_unidades.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>
