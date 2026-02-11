@@ -1,12 +1,14 @@
 const express = require('express')
 const app = express()
+// necessário para permitir requisições de diferentes origens(dominios/servidores)
+const cors = require('cors')
+app.use(cors())
 
 /* Indica que todas as requisições podem receber Body em JSON. A partir disso, o Express aplica um JSON.parse para o conteudo recebido */
 
 app.use(express.json())
 
 app.get('/', function (req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*')
     res.send('Loja-Informatica')
 })
 
@@ -17,7 +19,7 @@ let conexao = mysql.createConnection({
     password: "JD_eXLNHp1ZG",
     database: "gutoxa27_bd_loja"
 })
-
+ 
 
 conexao.connect(function (erro) {
     if (erro) {
@@ -30,7 +32,6 @@ conexao.connect(function (erro) {
 
 // Read All - [GET] /produtos
 app.get("/produtos", function (req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*')
     conexao.query("SELECT * FROM produtos", function (erro, lista_produtos, campos) {
         console.log(lista_produtos);
         res.send(lista_produtos)
@@ -38,7 +39,6 @@ app.get("/produtos", function (req, res) {
 })
 // Read by categoria - [GET] /produtos/:categoria
 app.get("/produtos/:categoria", function (req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*')
     // pegamos a categoria que foi enviada na requisição
     const categoria = req.params.categoria
     conexao.query(`SELECT * FROM produtos where categoria='${categoria}'`, function (erro, dados, campos) {
@@ -48,7 +48,6 @@ app.get("/produtos/:categoria", function (req, res) {
 
 // Read by categoria - [GET] /produtos/:categoria/:ordem
 app.get("/produtos/:categoria/:ordem", function (req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*')
     // pegamos a categoria que foi enviada na requisição
     const categoria = req.params.categoria
     const ordem = req.params.ordem
@@ -59,7 +58,6 @@ app.get("/produtos/:categoria/:ordem", function (req, res) {
 
 
 app.get("/unidades", function (req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*')
     conexao.query("SELECT * FROM unidades", function (erro, lista_unidades) {
         console.log(lista_unidades);
         res.send(lista_unidades)
