@@ -64,5 +64,17 @@ app.get("/unidades", function (req, res) {
 
     })
 })
+app.post("/produto", function (req, res) {
+    const { titulo, preco, descricao, avaliacao, foto, categoria } = req.body;
+    conexao.query(`
+        INSERT INTO produtos(titulo, foto, descricao, preco, avaliacao, categoria)
+        values('${titulo}','${foto}','${descricao}',${preco},${avaliacao}, '${categoria}')`,
+    function (erro, resultado) {
+        if (erro) {
+            res.json(erro);
+        }
+        res.send(resultado.insertId);
+        });
+    })
 
 app.listen(3000)
