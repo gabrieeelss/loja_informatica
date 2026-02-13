@@ -77,4 +77,16 @@ app.post("/produto", function (req, res) {
         });
     })
 
+    app.post("/unidades", function (req, res) {
+    const { nome, telefone, email, endereco, latitude, longitude, foto } = req.body;
+    conexao.query(`
+        INSERT INTO unidades(nome_da_loja, telefone, email, endereco, latitude, longitude, foto)
+        values('${nome}',${telefone},'${email}','${endereco}',${latitude}, ${longitude}, '${foto}')`,
+    function (erro, resultado) {
+        if (erro) {
+            res.json(erro);
+        }
+        res.send(resultado.insertId);
+        });
+    })
 app.listen(3000)
