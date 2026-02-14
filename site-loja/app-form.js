@@ -32,6 +32,7 @@ function fnCadastrarProdutos() {
 .then((dados) =>{
     fnLimparCampos()
     console.log(dados)
+    fnCriarToast()
 })
 .catch(erro => console.log(erro.message))
 }
@@ -48,5 +49,9 @@ btn_salvar.addEventListener("click", function () {
     fnCadastrarProdutos()
 })
 
-
- 
+// TOAST
+function fnCriarToast () {
+const toastLiveExample = document.getElementById('liveToast')
+  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+    toastBootstrap.show()
+}

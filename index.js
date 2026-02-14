@@ -1,5 +1,8 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true}))
+app.use(bodyParser.json())
 // necessário para permitir requisições de diferentes origens(dominios/servidores)
 const cors = require('cors')
 app.use(cors())
@@ -65,10 +68,8 @@ app.get("/unidades", function (req, res) {
     })
 })
 app.post("/produto", function (req, res) {
-    const { titulo, preco, descricao, avaliacao, foto, categoria } = req.body;
-    conexao.query(`
-        INSERT INTO produtos(titulo, foto, descricao, preco, avaliacao, categoria)
-        values('${titulo}','${foto}','${descricao}',${preco},${avaliacao}, '${categoria}')`,
+    const  data = req.body
+    conexao.query('INSERT INTO produtos set ?', [data], 
     function (erro, resultado) {
         if (erro) {
             res.json(erro);
@@ -78,10 +79,8 @@ app.post("/produto", function (req, res) {
     })
 
     app.post("/unidades", function (req, res) {
-    const { nome, telefone, email, endereco, latitude, longitude, foto } = req.body;
-    conexao.query(`
-        INSERT INTO unidades(nome_da_loja, telefone, email, endereco, latitude, longitude, foto)
-        values('${nome}',${telefone},'${email}','${endereco}',${latitude}, ${longitude}, '${foto}')`,
+    const data = req.body
+    conexao.query('INSERT INTO unidades set?', [data],
     function (erro, resultado) {
         if (erro) {
             res.json(erro);
@@ -90,3 +89,20 @@ app.post("/produto", function (req, res) {
         });
     })
 app.listen(3000)
+
+// LOGIN
+app.post("/login/", function (req, res){
+    const usuario = req.body.usuario
+    const senha = req.body.senha
+    conexao.query(`select * from usuarios where usuario = '${usuario}' and senha = '${senha}'`, function (erro, resultado, campos){
+        if (erro){
+            res.send(erro)
+        }else{
+            if (resultado.length > 0){
+                res.status(200).send('Sucesso')
+            }else{
+                res.status(401).send('Inválido')
+            }
+        }
+    })
+})

@@ -10,6 +10,13 @@ function fnAlterarFoto() {
 function fnLimparCampos() {
     document.getElementById("form-unidades").reset()
 }
+ function fnMensagemSalvar(){
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    var toastList = toastElList.map(function (toastEl){
+        return new bootstrap.Toast(toastEl)
+    })
+    toastList.forEach(toast => toast.show())
+ }
 
 function fnCadastrarUnidade() {
 
@@ -33,6 +40,7 @@ function fnCadastrarUnidade() {
 .then((dados) =>{
     fnLimparCampos()
     console.log(dados)
+    fnMensagemSalvar()
 })
 .catch(erro => console.log(erro.message))
 }
