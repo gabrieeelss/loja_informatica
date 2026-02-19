@@ -88,7 +88,6 @@ app.post("/produto", function (req, res) {
         res.send(resultado.insertId);
         });
     })
-app.listen(3000)
 
 // LOGIN
 app.post("/login/", function (req, res){
@@ -99,10 +98,23 @@ app.post("/login/", function (req, res){
             res.send(erro)
         }else{
             if (resultado.length > 0){
-                res.status(200).send('Sucesso')
+                res.sendStatus(200)
             }else{
-                res.status(401).send('Inválido')
+                res.sendStatus(401)
             }
         }
     })
 })
+
+// CADASTRO DE USUARIOS 
+    app.post("/cad-user", function (req, res) {
+    const data = req.body
+    conexao.query('INSERT INTO usuarios set?', [data],
+    function (erro, resultado) {
+        if (erro) {
+            res.json(erro);
+        }
+        res.send(resultado.insertId);
+        });
+    })
+app.listen(3000)
