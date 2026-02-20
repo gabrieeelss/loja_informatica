@@ -40,6 +40,16 @@ app.get("/produtos", function (req, res) {
         res.send(lista_produtos)
     })
 })
+
+// Read ONE - [GET] /produto
+app.get("/produto/:id", function (req, res){
+    const id = req.params.id
+    conexao.query("SELECT * FROM produtos where id = ? ", [id] ,
+        function (erro, dados, campos){
+            res.json(dados)
+        })
+})
+
 // Read by categoria - [GET] /produtos/:categoria
 app.get("/produtos/:categoria", function (req, res) {
     // pegamos a categoria que foi enviada na requisição
