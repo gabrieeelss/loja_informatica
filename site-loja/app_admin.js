@@ -11,7 +11,7 @@ function fnMontarLinhaProduto(produto) {
                                 <td>
                                 <a href="um-produto.html?id=${produto.id}" class="btn" title="Ver Mais Informações">🔎</a>
                                 <a href="editar-produto.html?id=${produto.id}" class="btn" title="Editar Produto">✏️</a>
-                                <button type="button" class="btn" title="Excluir">❌</a>
+                                <button type="button" class="btn" onclick="fnExcluirProduto(${produto.id}, event.target)" title="Excluir">❌</button>
                             </tr>
     `
 

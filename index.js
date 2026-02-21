@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({ extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 // necessário para permitir requisições de diferentes origens(dominios/servidores)
 const cors = require('cors')
@@ -22,7 +22,7 @@ let conexao = mysql.createConnection({
     password: "JD_eXLNHp1ZG",
     database: "gutoxa27_bd_loja"
 })
- 
+
 
 conexao.connect(function (erro) {
     if (erro) {
@@ -42,10 +42,10 @@ app.get("/produtos", function (req, res) {
 })
 
 // Read ONE - [GET] /produto
-app.get("/produto/:id", function (req, res){
+app.get("/produto/:id", function (req, res) {
     const id = req.params.id
-    conexao.query("SELECT * FROM produtos where id = ? ", [id] ,
-        function (erro, dados, campos){
+    conexao.query("SELECT * FROM produtos where id = ? ", [id],
+        function (erro, dados, campos) {
             res.json(dados)
         })
 })
@@ -69,7 +69,29 @@ app.get("/produtos/:categoria/:ordem", function (req, res) {
     })
 })
 
+// Update - [PUT] /produto/:id
+app.put("/produto/:id", function (req, res) {
+    const id = req.params.id
+    const data = req.body
+    conexao.query(`UPDATE produtos set ? where id = ${id}`, [data], function (erro, resultado) {
+        if (erro) {
+            res.send(erro)
+        }
+        res.send({ "status": 200, "message": "Atualizado com sucesso!" })
+    })
+})
 
+// Delete - [DELETE] /produto/:id
+app.delete("/produto/:id", function(req, res) {
+    const id = req.params.id
+    conexao.query(`DELETE FROM produtos where id = ${id}`, function (erro, resultado){
+        if (erro) {
+            res.send(erro)
+        }
+        res.send({ "status": 200, "message": "Excluido com sucesso!"})
+    })
+})
+ 
 app.get("/unidades", function (req, res) {
     conexao.query("SELECT * FROM unidades", function (erro, lista_unidades) {
         console.log(lista_unidades);
@@ -78,38 +100,38 @@ app.get("/unidades", function (req, res) {
     })
 })
 app.post("/produto", function (req, res) {
-    const  data = req.body
-    conexao.query('INSERT INTO produtos set ?', [data], 
-    function (erro, resultado) {
-        if (erro) {
-            res.json(erro);
-        }
-        res.send(resultado.insertId);
+    const data = req.body
+    conexao.query('INSERT INTO produtos set ?', [data],
+        function (erro, resultado) {
+            if (erro) {
+                res.json(erro);
+            }
+            res.send(resultado.insertId);
         });
-    })
+})
 
-    app.post("/unidades", function (req, res) {
+app.post("/unidades", function (req, res) {
     const data = req.body
     conexao.query('INSERT INTO unidades set?', [data],
-    function (erro, resultado) {
-        if (erro) {
-            res.json(erro);
-        }
-        res.send(resultado.insertId);
+        function (erro, resultado) {
+            if (erro) {
+                res.json(erro);
+            }
+            res.send(resultado.insertId);
         });
-    })
+})
 
 // LOGIN
-app.post("/login/", function (req, res){
+app.post("/login/", function (req, res) {
     const usuario = req.body.usuario
     const senha = req.body.senha
-    conexao.query(`select * from usuarios where usuario = '${usuario}' and senha = '${senha}'`, function (erro, resultado, campos){
-        if (erro){
+    conexao.query(`select * from usuarios where usuario = '${usuario}' and senha = '${senha}'`, function (erro, resultado, campos) {
+        if (erro) {
             res.send(erro)
-        }else{
-            if (resultado.length > 0){
+        } else {
+            if (resultado.length > 0) {
                 res.sendStatus(200)
-            }else{
+            } else {
                 res.sendStatus(401)
             }
         }
@@ -117,14 +139,14 @@ app.post("/login/", function (req, res){
 })
 
 // CADASTRO DE USUARIOS 
-    app.post("/cad-user", function (req, res) {
+app.post("/cad-user", function (req, res) {
     const data = req.body
     conexao.query('INSERT INTO usuarios set?', [data],
-    function (erro, resultado) {
-        if (erro) {
-            res.json(erro);
-        }
-        res.send(resultado.insertId);
+        function (erro, resultado) {
+            if (erro) {
+                res.json(erro);
+            }
+            res.send(resultado.insertId);
         });
-    })
+})
 app.listen(3000)
